@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Certificados Académicos</title>
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .certificate-page {
+            width: 210mm;
+            min-height: 297mm;
+            margin: 0 auto;
+            padding: 20mm;
+            background-color: #fff0f5; /* Fondo rosado claro */
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            position: relative;
+            font-family: 'Times New Roman', Times, serif;
+            border: 15px solid #ff69b4; /* Borde rosado */
+            background-image: linear-gradient(to bottom, #ffb6c1, #fff0f5);
+        }
+        
+        .certificate-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px dashed #ff69b4; /* Línea divisoria rosada */
+        }
+        
+        .certificate-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #c71585; /* Color rosado oscuro */
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .certificate-subtitle {
+            font-size: 14px;
+            margin-bottom: 8px;
+            color: #db7093; /* Color rosado medio */
+            font-style: italic;
+        }
+        
+        .certificate-body {
+            margin-top: 40px;
+            line-height: 1.8;
+            color: #333;
+        }
+        
+        .certificate-text {
+            margin-bottom: 20px;
+            text-align: justify;
+            padding: 0 10px;
+        }
+        
+        .signature-section {
+            margin-top: 60px;
+            text-align: center;
+        }
+        
+        .signature-line {
+            width: 300px;
+            border-top: 2px solid #ff69b4;
+            margin: 0 auto;
+            padding-top: 10px;
+        }
+        
+        .footer-info {
+            position: absolute;
+            bottom: 20mm;
+            width: calc(100% - 40mm);
+            font-size: 11px;
+            text-align: center;
+            border-top: 2px dashed #ff69b4;
+            padding-top: 15px;
+            color: #c71585;
+        }
+        
+        .highlight {
+            font-weight: bold;
+            color: #c71585;
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        .text-right {
+            text-align: right;
+        }
+        
+        .footer-signature {
+            position: absolute;
+            right: 20mm;
+            bottom: 50mm;
+            width: 120px;
+            text-align: center;
+        }
+        
+        .footer-signature img {
+            max-height: 60px;
+            border: 1px solid #ff69b4;
+            padding: 5px;
+            background: white;
+        }
+        
+        .decoration-corner {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            opacity: 0.3;
+        }
+        
+        .top-left {
+            top: 10px;
+            left: 10px;
+            border-top: 3px solid #ff69b4;
+            border-left: 3px solid #ff69b4;
+        }
+        
+        .top-right {
+            top: 10px;
+            right: 10px;
+            border-top: 3px solid #ff69b4;
+            border-right: 3px solid #ff69b4;
+        }
+        
+        .bottom-left {
+            bottom: 10px;
+            left: 10px;
+            border-bottom: 3px solid #ff69b4;
+            border-left: 3px solid #ff69b4;
+        }
+        
+        .bottom-right {
+            bottom: 10px;
+            right: 10px;
+            border-bottom: 3px solid #ff69b4;
+            border-right: 3px solid #ff69b4;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-pink-700 text-white shadow-lg">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center mb-4 md:mb-0">
+                    <img src="./assets/logo.png" alt="Logo Institución" class="h-12 mr-3">
+                    <h1 class="text-2xl font-bold">Sistema de Certificados Académicos</h1>
+                </div>
+                <nav>
+                    <ul class="flex space-x-6">
+                        
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenido Principal -->
+    <main class="container mx-auto px-4 py-8">
+        <div class="max-w-4xl mx-auto">
+            <!-- Formulario simplificado -->
+            <section class="bg-white rounded-lg shadow-md p-6 mb-8">
+                <h2 class="text-xl font-semibold mb-6 text-pink-800 border-b border-pink-200 pb-2">
+                    <i class="fas fa-user-graduate mr-2"></i>Datos del Estudiante
+                </h2>
+                
+                <form id="certificateForm" class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="fullName" class="block text-gray-700 font-medium mb-2">Nombre Completo</label>
+                            <input type="text" id="fullName" required
+                                   class="w-full px-4 py-2 border border-pink-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-pink-500"
+                                   placeholder=>
+                        </div>
+                        
+                        <div>
+                            <label for="docNumber" class="block text-gray-700 font-medium mb-2">Número de Documento</label>
+                            <input type="text" id="docNumber" required
+                                   class="w-full px-4 py-2 border border-pink-300 rounded-lg focus:ring-2 focus:ring-pink-500"
+                                   placeholder=>
+                        </div>
+                    </div>
+                    
+                    <!-- Sección para cargar firma -->
+                    <div>
+                        <label class="block text-gray-700 font-medium mb-2">Firma Digital</label>
+                        <div class="border-2 border-dashed border-pink-300 rounded-lg p-4 text-center">
+                            <div id="signaturePreview" class="mb-4 hidden">
+                                <img id="signatureImage" src="#" alt="Firma cargada" class="max-h-32 mx-auto border border-pink-200 p-1">
+                            </div>
+                            <div id="signatureUpload" class="flex flex-col items-center justify-center">
+                                <label for="signatureFile" class="cursor-pointer bg-pink-100 hover:bg-pink-200 px-4 py-2 rounded-lg transition text-pink-800">
+                                    <i class="fas fa-upload mr-2"></i>Seleccionar archivo de firma
+                                </label>
+                                <input type="file" id="signatureFile" accept="image/*" class="hidden">
+                                <p class="text-sm text-pink-600 mt-2">Formatos aceptados: JPG, PNG (Máx. 2MB)</p>
+                            </div>
+                            <div class="mt-2">
+                                <button type="button" id="removeSignature" class="text-pink-700 hover:text-pink-900 hidden">
+                                    <i class="fas fa-trash-alt mr-1"></i>Eliminar Firma
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-end">
+                        <button type="submit" class="bg-pink-600 hover:bg-pink-700 text-white font-bold py-3 px-6 rounded-lg transition">
+                            <i class="fas fa-file-pdf mr-2"></i>Generar Certificado PDF
+                        </button>
+                    </div>
+                </form>
+            </section>
+            
+            <!-- Vista previa del certificado -->
+            <section id="certificatePreview" class="hidden bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-xl font-semibold mb-6 text-pink-800 border-b border-pink-200 pb-2">
+                    <i class="fas fa-eye mr-2"></i>Vista Previa del Certificado
+                </h2>
+                <div id="certificateContainer" class="border border-pink-200 p-2">
+                    <div class="certificate-page">
+                        <!-- Decoración de esquinas -->
+                        <div class="decoration-corner top-left"></div>
+                        <div class="decoration-corner top-right"></div>
+                        <div class="decoration-corner bottom-left"></div>
+                        <div class="decoration-corner bottom-right"></div>
+                        
+                        <div class="certificate-header">
+                            <div class="certificate-title">REGISTRO Y CONTROL CESDE</div>
+                            <div class="certificate-subtitle">LICENCIA DE FUNCIONAMIENTO DE LA SECRETARÍA DE EDUCACIÓN</div>
+                            <div class="certificate-subtitle">DEL MUNICIPIO DE LA PINTADA 2020060127237 DE 2020-12-02</div>
+                            <div class="certificate-subtitle">RESOLUCIÓN OFICIAL DEL PROGRAMA 2021060010827 DE 2021-05-20</div>
+                            <div class="certificate-subtitle">NIT. 890.913.319-1</div>
+                        </div>
+                        
+                        <div class="text-right text-pink-700 italic">La Pintada, 17 de febrero de 2025</div>
+                        
+                        <div class="certificate-body">
+                            <div class="text-center font-bold mb-6 text-pink-700 text-xl">LA JEFE DE REGISTRO Y CONTROL</div>
+                            <div class="text-center font-bold mb-10 text-pink-700 text-xl">CERTIFICA:</div>
+                            
+                            <div class="certificate-text">
+                                Que <span class="highlight" id="studentName"></span>, identificado con documento número 
+                                <span class="highlight" id="studentDocNumber"></span>, para el período <span class="highlight">1-2025</span> 
+                                se encuentra cursando el <span class="highlight">primero de tres</span> módulos académicos, 
+                                correspondientes al programa <span class="highlight">Técnico Laboral por Competencias en Auxiliar en Desarrollo de Aplicaciones Informáticas</span>, con una 
+                                intensidad del período de <span class="highlight">255</span> horas teórico-prácticas 
+                                para un total del programa de <span class="highlight">694</span> horas.
+                            </div>
+                            
+                            <div class="certificate-text">
+                                La fecha de inicio para el semestre <span class="highlight">1-2025</span> pactada 
+                                por la Institución es para el <span class="highlight">10 de febrero de 2025</span> y la fecha de 
+                                finalización del semestre es para el <span class="highlight">21 de junio de 2025</span>.
+                            </div>
+                            
+                            <div class="certificate-text">
+                                De acuerdo con la Ley 115 de 1994 y el Decreto 1075 de 2015, CESDE es una Institución 
+                                de Educación para el Trabajo y el Desarrollo Humano.
+                            </div>
+                            
+                            <div class="certificate-text">
+                                Este certificado se expide por Solicitud del Interesado.
+                            </div>
+                            
+                            <div class="signature-section">
+                                <div class="mb-16"></div>
+                                <div class="signature-line"></div>
+                                <div class="font-bold mt-2 text-pink-700">SANDRA MILENA BÉTANCUR DEOSSA</div>
+                                <div class="text-pink-600">Jefe de Registro y Control</div>
+                                <div class="text-pink-600">C.C. 1.128.385.408</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Sección de firma en el footer -->
+                        <div class="footer-signature">
+                            <img id="certificateSignature" src="" alt="Firma" style="display: none;">
+                        </div>
+                        
+                        <div class="footer-info">
+                            <div>Luisa D. (604) 480 88 22 ext. 2301</div>
+                            <div>Cesde.edu.co</div>
+                            <div>Kilómetro 2 vía Puente Iglesias</div>
+                            <div>Colombia - Antioquia – La Pintada</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex justify-end mt-4">
+                    <button id="downloadPdf" class="bg-pink-600 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded-lg transition">
+                        <i class="fas fa-download mr-2"></i>Descargar PDF
+                    </button>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-pink-800 text-white py-6">
+        <div class="container mx-auto px-4 text-center">
+            <p>© 2023 Sistema de Certificados Académicos. Todos los derechos reservados.</p>
+            <p class="text-pink-200 text-sm mt-2">Institución Educativa Ejemplo</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script>
+        // Inicializar jsPDF
+        const { jsPDF } = window.jspdf;
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('certificateForm');
+            const previewSection = document.getElementById('certificatePreview');
+            const downloadBtn = document.getElementById('downloadPdf');
+            const signatureFile = document.getElementById('signatureFile');
+            const signaturePreview = document.getElementById('signaturePreview');
+            const signatureImage = document.getElementById('signatureImage');
+            const certificateSignature = document.getElementById('certificateSignature');
+            const removeSignature = document.getElementById('removeSignature');
+            
+            // Mostrar vista previa del certificado
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Obtener valores del formulario
+                const fullName = document.getElementById('fullName').value;
+                const docNumber = document.getElementById('docNumber').value;
+                
+                // Actualizar vista previa
+                document.getElementById('studentName').textContent = fullName.toUpperCase();
+                document.getElementById('studentDocNumber').textContent = docNumber;
+                
+                // Mostrar vista previa
+                previewSection.classList.remove('hidden');
+                
+                // Desplazarse a la vista previa
+                previewSection.scrollIntoView({ behavior: 'smooth' });
+            });
+            
+            // Manejar la carga de la firma
+            signatureFile.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        signatureImage.src = event.target.result;
+                        certificateSignature.src = event.target.result;
+                        certificateSignature.style.display = 'block';
+                        signaturePreview.classList.remove('hidden');
+                        removeSignature.classList.remove('hidden');
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+            
+            // Eliminar firma
+            removeSignature.addEventListener('click', function() {
+                signatureImage.src = '#';
+                certificateSignature.src = '';
+                certificateSignature.style.display = 'none';
+                signaturePreview.classList.add('hidden');
+                removeSignature.classList.add('hidden');
+                signatureFile.value = '';
+            });
+            
+            // Función para generar el PDF
+            async function generatePDF() {
+                const certificate = document.getElementById('certificateContainer');
+                const btn = document.getElementById('downloadPdf');
+                const originalText = btn.innerHTML;
+                
+                try {
+                    // Mostrar estado de carga
+                    btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Generando PDF...';
+                    btn.disabled = true;
+                    
+                    // Configuración de html2canvas
+                    const options = {
+                        scale: 2,
+                        useCORS: true,
+                        allowTaint: true,
+                        logging: false,
+                        backgroundColor: '#fff0f5',
+                        letterRendering: true
+                    };
+                    
+                    // Generar el canvas
+                    const canvas = await html2canvas(certificate, options);
+                    
+                    // Crear PDF
+                    const pdf = new jsPDF({
+                        orientation: 'portrait',
+                        unit: 'mm',
+                        format: 'a4'
+                    });
+                    
+                    // Ajustar imagen al PDF
+                    const imgData = canvas.toDataURL('image/png', 1.0);
+                    const imgWidth = 210; // Ancho A4 en mm
+                    const imgHeight = canvas.height * imgWidth / canvas.width;
+                    
+                    pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+                    
+                    // Descargar el PDF
+                    pdf.save('Certificado_Estudio_' + new Date().toISOString().slice(0,10) + '.pdf');
+                    
+                } catch (error) {
+                    console.error('Error al generar PDF:', error);
+                    alert('Ocurrió un error al generar el PDF. Por favor intente nuevamente.');
+                } finally {
+                    // Restaurar el botón
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                }
+            }
+            
+            // Asignar evento al botón de descarga
+            downloadBtn.addEventListener('click', generatePDF);
+        });
+    </script>
+</body>
+</html>
